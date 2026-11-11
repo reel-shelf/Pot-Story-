@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pot Story</title>
+<meta name="description" content="Cash Pot results, number meanings and story picks">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3e8; --card:#ffffff; --ink:#1d2a1f; --muted:#5d6b5f; --line:#e5dfc9;
+  --green:#0b6b3a; --green2:#08532c; --gold:#f5c518; --gold2:#d9a400; --red:#c62828;
+  --chip:#eef6f0;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101511; --card:#1a221c; --ink:#eef3ee; --muted:#9fb0a2; --line:#2b362d;
+    --green:#14864b; --green2:#0c5f33; --chip:#223026;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101511; --card:#1a221c; --ink:#eef3ee; --muted:#9fb0a2; --line:#2b362d;
+  --green:#14864b; --green2:#0c5f33; --chip:#223026;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-size:16px;line-height:1.45}
+header{background:var(--green);color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:26px;letter-spacing:.5px}
+.brand span{color:var(--gold)}
+.brand svg{width:38px;height:38px}
+nav{display:flex;gap:4px;margin-top:10px}
+nav button{flex:1;background:none;border:0;color:#cfe8d8;font:800 15px Nunito,sans-serif;padding:10px 4px;border-bottom:4px solid transparent;cursor:pointer}
+nav button.on{color:#fff;border-bottom-color:var(--gold)}
+main{max-width:720px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+h2{font-family:"Baloo 2",sans-serif;font-size:21px;margin:0 0 8px}
+h3{font-size:15px;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.muted{color:var(--muted);font-size:14px}
+.coin{display:inline-block;flex:none}
+.coin svg{display:block;width:100%;height:100%}
+.pick{display:flex;gap:14px;align-items:center}
+.pick .coin{width:88px;height:88px}
+.pick .num{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:30px;line-height:1}
+.pick .fig{font-weight:800;font-size:18px}
+.story{background:var(--chip);border-left:4px solid var(--gold2);border-radius:10px;padding:10px 12px;margin-top:12px}
+.alts{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.alt{display:flex;align-items:center;gap:8px;background:var(--chip);border-radius:999px;padding:4px 12px 4px 4px;border:0;color:var(--ink);font:700 14px Nunito,sans-serif;cursor:pointer}
+.alt .coin{width:34px;height:34px}
+.draws{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.draw{background:var(--chip);border-radius:14px;padding:10px 6px;text-align:center;border:0;color:var(--ink);font-family:inherit;cursor:pointer}
+.draw .coin{width:58px;height:58px;margin:4px auto}
+.draw .t{font-size:12px;color:var(--muted);font-weight:700}
+.draw .n{font-weight:800;font-size:14px}
+.draw.empty{cursor:default;opacity:.7}
+.draw.empty .blank{width:58px;height:58px;margin:4px auto;border-radius:50%;border:3px dashed var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted)}
+.day{border-top:1px solid var(--line);padding:10px 0}
+.day b{display:block;margin-bottom:6px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.mini{display:flex;align-items:center;gap:6px;background:var(--chip);border-radius:999px;padding:3px 10px 3px 3px;font-size:13px;font-weight:700;border:0;color:var(--ink);cursor:pointer}
+.mini .coin{width:28px;height:28px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.grid button{background:none;border:0;padding:2px;cursor:pointer;border-radius:50%}
+.grid button.on{outline:3px solid var(--green);outline-offset:1px}
+.grid .coin{width:100%;aspect-ratio:1}
+.links li{margin:10px 0;list-style:none}
+.links{padding:0;margin:0}
+.chart-item{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.chart-item:first-child{border-top:0}
+.chart-item .coin{width:72px;height:72px}
+.chart-item .lbl{font-weight:800;font-size:14px;text-align:center;margin-top:4px;width:72px}
+.chart-item p{margin:2px 0 8px;font-size:15px}
+.k{font-size:12px;font-weight:800;color:var(--green);letter-spacing:.5px}
+mark{background:var(--gold);color:#000;border-radius:3px;padding:0 2px}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.search{position:relative}
+.form{display:grid;grid-template-columns:1fr 1fr 80px;gap:8px;margin-top:8px}
+.btn{background:var(--green);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:800 15px Nunito,sans-serif;cursor:pointer;margin-top:8px}
+.tag{display:inline-block;background:var(--gold);color:#000;font-size:11px;font-weight:800;border-radius:6px;padding:2px 6px;vertical-align:middle;margin-left:6px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:8px 16px 30px;max-width:720px;margin:0 auto}
+.hide{display:none}
+@media (max-width:420px){.grid{grid-template-columns:repeat(6,1fr);gap:4px}.pick .coin{width:74px;height:74px}.form{grid-template-columns:1fr 1fr}.form input[type=number]{grid-column:span 2}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="cg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff3a8"/><stop offset=".55" stop-color="#f5c518"/><stop offset="1" stop-color="#c98a00"/></radialGradient>
+    <radialGradient id="cg2" cx="45%" cy="40%" r="65%"><stop offset="0" stop-color="#fffbe0"/><stop offset="1" stop-color="#ffd84d"/></radialGradient>
+  </defs>
+</svg>
+
+<header>
+  <div class="brand"><span class="coin" id="logo"></span>Pot <span>Story</span></div>
+  <nav>
+    <button data-tab="results" class="on">Results</button>
+    <button data-tab="stories">Story picks</button>
+    <button data-tab="chart">Chart</button>
+  </nav>
+</header>
+
+<main>
+  <section id="results">
+    <div class="card" id="nextCard"></div>
+    <div class="card">
+      <h2>Today's draws</h2>
+      <div class="muted" id="updated"></div>
+      <div class="draws" id="today" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h2>Earlier days</h2>
+      <div id="earlier"></div>
+    </div>
+    <div class="card">
+      <h2>Add a result</h2>
+      <div class="muted">Results update by themselves. If a draw is missing, add it here and it saves on this phone.</div>
+      <div class="form">
+        <input type="date" id="fDate">
+        <select id="fDraw"></select>
+        <input type="number" id="fNum" min="1" max="36" placeholder="No.">
+      </div>
+      <button class="btn" id="fAdd">Add result</button>
+      <span class="muted" id="fMsg"></span>
+    </div>
+  </section>
+
+  <section id="stories" class="hide">
+    <div class="card">
+      <h2>Pick a number</h2>
+      <div class="muted">Tap the number that played and see where its story leads.</div>
+      <div class="grid" id="grid" style="margin-top:12px"></div>
+    </div>
+    <div class="card" id="storyOut"></div>
+  </section>
+
+  <section id="chart" class="hide">
+    <div class="card">
+      <div class="search"><input id="q" type="search" placeholder="Search a dream or a word, e.g. fish, wedding, fire"></div>
+      <div class="muted" id="qCount" style="margin-top:8px"></div>
+    </div>
+    <div class="card" id="chartList"></div>
+  </section>
+</main>
+
+<footer>Story picks come from the number meanings, for fun and culture only. Cash Pot is random and every number has the same 1 in 36 chance. 18+. Play responsibly.</footer>
+
+<script>
+/* ---------- Number chart ---------- */
+const RAW = [
+[1,"Duppy","Ice|Grey hair|Rice|Kiss a dead cow|Bench|White cloth|Needle|Fright|Dead hair|Milk|Eye|Anything white|Shore|Fat cow|Golden ring|Still birth|Walking|Beggar man|Big fish|Smoke","Sand|Teeth|Buildings|A lot of cocks|Bamboo|Cross|Cucumber|Bench|Dark & obscure|Defense|Drapery|Driver|Horse|Jam|Lawyer|Stick|Kiss a dead person"],
+[2,"Small Fire","Candles|Paper|Tank or house bottom|Throne|Mattress|Stove|Bottom|Cigarette|Bulb|Crab|Lobster|Cray fish|Daughter|Deceitful love|Falling tree","Disappointment|Hiding|Bicycle|Eagle|Wire|Cabbage|Grapefruit|Shortgun|Black horse|Tongue"],
+[3,"Dead","Leave your house|Garlic|Broom|Tongue|Duck|Wreath|Memory loss|Enemy|Distant person|Bride|Small comb|Frog|Baker|Bald head|Broken arms|Counting|To show pride","Hot water|Waterfall|Butter|Hair|Concert|Cucumber|Dog|Driving car|Earrings|Covered field|Fire|Grocery store|Ice-cream|Sculptor|Shoes"],
+[4,"Egg","Blood|Chicken coop|Red wine|Nourishment|Wedding cake|Kissing|Hugging|Small amount of gold|Knee|Neglected love|Sweeties|Tonic","Blind man|Candle light|Fight in a crowd|Fire|New hat|Ripe pear|Many plates|Teenager|Full wallet|Many good looking women|Admire"],
+[5,"Thief","Dirt|Actor|Spider|Step-brother|Prayer|Heaven|Roughness|Small bible|Drop pan|Gift|Chinese monk|Plot|Morning rainbow|Small stream","To kill bees|To break something|Cemetery|Church|Nice clothes|Playing with a dog|Earth|Handsome"],
+[6,"Strong Man","Iron|Stone|Lion|Bundle of iron|Copper|Gunshot|Fighting stone|Tomb|Bone|Anything strong|Corpse|To witness something|Short gun|Bullet","Heat|Hot engine|Adopting|Long beard|Calabash|Carrots|Chocolate|Coffee|Flower|Beggar man|Royalty|Sick heart|Spider|Small fire|Water|Abandon or leave something"],
+[7,"Married Woman","Admire|Widow|Handsome|Woman|Hog|Heaven|Perfection|Sweet personality|Blessings|Bench","Grave digger|Bakery|Blind man|Candles|To eat from a chamber pot|To see excrement|Fire|Friendship|Hair|Lawyer|Nail|Needle|Stockings|To be accused|Speaking animals"],
+[8,"Belly","Red cow|Fat woman|Pumpkin|Well|Hole|Bread|Raw food|Bed|Pocket|Grave|Coconut|Hamper|Hot|Glass|Calabash|Matches|Pregnant|Pot","Long beard|To have a car broken down|A lot of death|Sweets|Diamond|To fall from an airplane|To witness an accident"],
+[9,"Cow","Twins|Married man|Elephant|Truck|Old dead|Coming from foreign|Meeting people|Fisherman|Widow","Old man|Beggar man|Small home|Birth of twins|Fisherman|Handsome|Help|Knife|Torn shoes|Admire|Truck"],
+[10,"Small House","Baby's crib|Small bed|Small car|Kitchen|Anything small|Ball|Pulpit|Thank you|Boat|Fowl coop|Gift","Shoes|Fight in a crowd|Healthy body|Small hill|Knee|Paper money"],
+[11,"Dog","Boy|Green ganja or bushes|Betting shop|Ocean|Two legs in bed|A lot of cocks|Playing with a dog|Delivery in pregnancy|Falling leaves","Pulpit|Small stream|Bamboo|Banana|Soursop|Bench|Grocery store|Hair|Hat|Pot"],
+[12,"Head","Crown|Brain|House top|Principal|Official person|Carpenter|Hat|Barber|Con man|Teacher|Ginal|Crows","Horse|Anything tall|Pregnant woman|Star"],
+[13,"Police","Left hand|Knife|Scissors|Right ears|Shoemaker|Old man|Teeth","Black man|Big comb|Black woman|Cemetery|Children|Chopstick|Elephant|Leaves falling|Golden ring|Still birth|Steel or metal"],
+[14,"Mouth","Bush|Friend|Preaching|Wild cat|Noise|Dried bushes|Tame cat|Furniture|Mourn|Singing|Counting|Mouth|Undertaker|Dead","Batteries|To give away|Bees|Cabbage|Dead body|Earring|Friend|Knee|Morning|Mouth|Fallen tree"],
+[15,"Rat","Weakness|Left foot|Accident|Chinese woman|Running|Queen|Dancing|Swimming|Anything weak|Indian woman|Beggar man|Anything light|Racing","Army|Beer|To eat from chamber pot|Children|Dentist|Dog|Fire|Kiss|To have lunch|Many plates|Spoon"],
+[16,"Young Girl","Green fruit|Grass|Anything nice|Rainbow|Youth|Bunch of flowers|Handsome|Ganja|Anything green|Bees","Ring|Beer|Bathe in troubled waters|Chair|Coffin|Fight|Killing animals|East|Shoes"],
+[17,"Chinese Man","Business man|Old dead|Gambler|Heaven|Rainfall|Running water from the hills|Language|Nose|Batteries|Birth of twins","Bus|Fever|Jam|Leave your house|Needle|Right foot|Pain|Wicked woman|Big fire"],
+[18,"Race Horse","Doctor|Doctor bird|Doctor fish|Dentist|Wild cat|Carpenter|Mongoose|Tame duck|Bees in your house|Meager cow|Construction|Trade man","Lawyer|Church|Corpse|Red cow|Ship|Torn shoes|Wood"],
+[19,"Silver Money","Silver|Feather|Deceitful love|Pretty woman|Ring|Lovely dress|Anything lovely|Money|Hair|To be breast-fed|Handcuff|Coin","Fish|Scale|Artist|Painter|Bathe in troubled waters|To build|Dessert|Plenty eggs|Deceitful|Neglected love|Wicked woman|Honey"],
+[20,"Sick Person","White hair|Pregnant|Naked woman|Raw meat|Cook food|Insect|Disgrace|Nakedness|Insane|Bakery|Sick|Naked person","Bread|Bible|A lot of chickens|Hat|Jam|Pregnant woman|Step-father"],
+[21,"Bad Girl","Mule|Anything bad|Devil|Bad man|Bird|Spy|Party|Birth of a girl|Actor|Miscarriage|Birth of fish|Obeahman","Baking|Wedding|Ice-cream|Banana|Full bottle|Cabbage|A lot of children|Dead children|Coffin|Dog|Driving car|Get something|Hair|Pencil|Scissors|Shouting|Big snake|Fruitful tree|Full wallet"],
+[22,"White Woman","Pain|Nurse|Salt water|Medicine|Coffin|Casket|Sea|Red ants|Easy labour or birth|Cancer|Dominoes|Gray|A lot of ducks|To share|Higgler|Star","Muddy water|Bees|Anything dirty|Agony|Chicken coop|Diamond|Friend|To have lunch|Many good-looking men|Nail|Pigs|Speaking animals"],
+[23,"Black Man","Good looking men|Animals|Black woman|Ugliness|Greed (eating)|Sailor|Jockey|Obeahman|Soldier|Fireman|To be with grandparents|Shared love|Ugly animals|Children","Birth of a cat or rat|Buildings|Chair|Cheque|To move out of a house|Falling leaves"],
+[24,"Fresh Water","Medicine|Lamb praising God|Flying|Bank|Picture|Tea|Jockey|Aeroplane|Kite","Light|Wedding|Appetite|Camera|Carpenter|Black cow|Hat|Kitchen|Green pear"],
+[25,"John Crow","Crowd|Fallen tree|Big crowd|Paper money|Old clothes|Johnkunu|Anything black|Castle|Christmas|Red cow|Picking up","Indoors|Stranger|Toothbrush|Watering flowers or vegetables|Wedding band|Worthless"],
+[26,"White Man","Black horse|Officials|Chief|King|Nurse|God|Police|Inspector|Heads of state|Presidents|Dog|Good business","Big boy|Castle|Doctor|Wood|Almond nut"],
+[27,"Big Fire","Mad person|Bullet|Fire|Flood|Low spirits|Short gun|Explosion|Violent person|Blind eye|Blind man|Wasp|Fighting|Bees on your body|Devil","Funeral|Priest|Accident|Bakery|Full bottle|Good business|Powder|Coffee|Get something|To say goodbye|Evening rainbow|Anything watery|American|Anything helpless"],
+[28,"Fowl","Adultery|Spirit|Country|Burial|Road|Small property (pasture)|Round neck|Burying something|Football field","Hope false|Prophet|Tie|Dog|Dominoes|Fever|To move out of a house|Ram goat|Sick heart|River"],
+[29,"Parson","Eagle|Butcher|Right foot|Pastor|Bull cow|Hill top|Climbing|Bull dog|Bull frog|Travelling in an aeroplane|Ram goat","Donkey|Chicken|Sweeping|Anything big|To borrow|Judge|Committing murder|Seasoning"],
+[30,"Fish","White rum|Muddy water|Bloody water|Healthy body|Dirty water|Dish|Flowers","Music|To break something|Playing with a dog|Ambulance with sick person|Wicked woman"],
+[31,"Lizard","Long stick|Bone|Wood|Snake|Rope|Long gun|Cord|Anything long|Fishing line|Long gown|Wire|Gold chain","Beer|Bee|Sting|Black cat|Nice clothes|Meager cow|Dog barking|Cocky|New hat|Killing animals|Disaster"],
+[32,"Gold","Red rum|Honey|Anything ripe|Faeces|Ripe fruit|Dried corn|Cake|Sweeping|Gold teeth|To be joyful","Bald head|Miscarriage or birth|To build|England|Corpse|Daybreak|Kiss a dead person|Defense|Shrimp|School"],
+[33,"Big House","Church|God|Stadium|Boat|Big property|Very large person|Truck|Hospital|Anything big|Deportation|Rich apartment|Angel","Athlete|To see and hear a car|Foggy|Obscure|Two people|Advice|Labour in pregnancy|Mahogany wood"],
+[34,"Baby","Birth of girl|Chicken|Riot|Young chicken or bird|Official person|Lightning","Anything young|Stockings|Adoption"],
+[35,"Goat","Oven|Shopping|Bible|Taking something from someone (not stealing)|Event (football match)","Rough sea|To go shopping"],
+[36,"Old Lady","Donkey|Abscess|Ride horses|Pick up money|Dry wood|Finish away with stranger|Asking pitifully|Old building|School of fish|Bad tooth|Harbour|Smoking pipe|Widow|Foreign","To remove bee hive"]
+];
+const NUMS = {};
+RAW.forEach(([n,fig,maj,min]) => NUMS[n] = {n, fig, major: maj.split("|"), minor: min.split("|")});
+
+/* ---------- Story links you know from the street ---------- */
+const STORIES = [
+ [8,15,"Belly means a hole, and what runs into a hole? The rat, 15."],
+ [8,16,"Belly means pregnant, and a young girl with belly points to 16."],
+ [1,3,"A duppy comes from the dead, so Duppy calls 3."],
+ [3,1,"When somebody dead, the duppy walks, so Dead calls 1."],
+ [3,25,"Where there's dead, John Crow circles, so Dead calls 25."],
+ [25,3,"John Crow only comes when something dead, so 25 calls 3."],
+ [2,27,"A small fire grows into a big fire, so 2 calls 27."],
+ [27,2,"A big fire burns down to a small fire, so 27 calls 2."],
+ [10,33,"A small house grows into a big house, so 10 calls 33."],
+ [33,10,"Big house and small house go together, so 33 calls 10."],
+ [11,15,"Dog chases rat, so 11 calls 15."],
+ [15,11,"Rat runs from the dog, so 15 calls 11."],
+ [4,28,"An egg comes from the fowl, so 4 calls 28."],
+ [28,4,"Fowl lays the egg, so 28 calls 4."],
+ [28,34,"Fowl hatches a young chicken, and young chicken is 34 Baby."],
+ [5,13,"Where there's a thief, police not far, so 5 calls 13."],
+ [13,5,"Police out looking for the thief, so 13 calls 5."],
+ [9,25,"When the cow drops, John Crow comes, so 9 calls 25."],
+ [7,9,"Married woman, married man. Married man is under 9 Cow."],
+ [9,7,"Cow means married man, and his wife is 7 Married Woman."],
+ [16,34,"Young girl and baby go together, so 16 calls 34."],
+ [34,16,"The baby grows into a young girl, so 34 calls 16."],
+ [19,32,"Silver money and gold walk together, so 19 calls 32."],
+ [32,19,"Gold and silver money go together, so 32 calls 19."],
+ [20,18,"Sick person needs a doctor, and Doctor is 18 Race Horse."],
+ [18,20,"Doctor goes to the sick person, so 18 calls 20."],
+ [21,7,"Bad girl versus married woman, so 21 calls 7."],
+ [7,21,"Married woman watching the bad girl, so 7 calls 21."],
+ [22,26,"White woman and white man, so 22 calls 26."],
+ [26,22,"White man and white woman, so 26 calls 22."],
+ [24,30,"Fresh water holds the fish, so 24 calls 30."],
+ [30,24,"Fish need water, so 30 calls 24."],
+ [18,23,"Race horse needs a jockey, and Jockey is under 23."],
+ [29,33,"Parson preaches in church, and Church is 33 Big House."],
+ [33,29,"Big house means church, and church calls the parson, 29."],
+ [36,1,"Old lady talks about duppy, so 36 calls 1."],
+ [12,13,"Head wears the cap, and the cap is 13 Police."],
+ [14,3,"Mouth means mourn, and mourning means dead, 3."],
+ [35,9,"Goat and cow graze in the same pasture, so 35 calls 9."],
+ [31,6,"Lizard means bone, and bone is under 6 Strong Man."],
+ [17,19,"Chinese man means business man, and business means money, 19."],
+ [6,27,"Strong man means gunshot, and gunshot fires like 27 Big Fire."],
+ [23,22,"Black man and white woman, so 23 calls 22."],
+ [26,12,"White man means chief, and the chief is the head, 12."]
+];
+
+/* ---------- Word groups used to link meanings ---------- */
+const CONCEPTS = {
+ fire:"fire|candle|candles|candle light|matches|stove|smoke|explosion|heat|hot|small fire|big fire|fireman|cigarette|lightning",
+ death:"dead|death|corpse|grave|burial|burying|coffin|casket|funeral|tomb|cemetery|undertaker|mourn|wreath|grave digger|still birth|old dead|dead body|dead children",
+ money:"money|coin|silver|gold|cheque|bank|wallet|rich|business|business man|good business|pick up money|paper money|gambler|betting shop|diamond",
+ church:"church|god|heaven|prayer|preaching|pulpit|bible|pastor|priest|prophet|angel|blessings|parson|small bible|lamb praising god",
+ water:"water|sea|ocean|river|stream|rainfall|flood|waterfall|harbour|swimming|bathe|salt water|fresh water|muddy water|dirty water|well|rough sea|shore",
+ birth:"pregnant|pregnancy|birth|labour|delivery|miscarriage|baby|crib|twins|breast-fed|adoption|adopting",
+ bees:"bee|bees|wasp|sting|honey|bee hive",
+ sick:"doctor|nurse|medicine|hospital|sick|pain|fever|dentist|ambulance|abscess|insane|agony|cancer|tonic|sick heart|weakness",
+ house:"house|home|buildings|building|castle|apartment|kitchen|property|indoors|house top|small house|big house",
+ horse:"horse|horses|jockey|donkey|mule|racing|race horse|black horse",
+ cow:"cow|bull|red cow|fat cow|black cow|meager cow|bull cow",
+ dog:"dog|bull dog|dog barking",
+ bird:"chicken|chickens|fowl|eagle|bird|crow|crows|duck|ducks|doctor bird|feather|cocks|chicken coop|fowl coop|john crow",
+ egg:"egg|eggs|plenty eggs",
+ cat:"cat|wild cat|tame cat|black cat",
+ rat:"rat|mongoose",
+ fish:"fish|fisherman|shrimp|lobster|crab|cray fish|fishing line|school of fish|doctor fish",
+ goat:"goat|ram goat|lamb",
+ food:"bread|rice|bakery|baking|baker|cake|cook food|raw food|raw meat|lunch|dish|plates|cabbage|banana|pumpkin|coconut|soursop|carrots|butter|jam|dessert|sweets|sweeties|garlic|seasoning|appetite|grocery store|oven|ice-cream|chocolate|wedding cake|dried corn|green fruit|ripe fruit|grapefruit|pear|almond nut",
+ drink:"rum|wine|beer|tea|coffee|milk|bottle|full bottle|white rum|red rum|red wine",
+ gun:"gun|gunshot|bullet|shortgun|short gun|long gun",
+ blade:"knife|scissors|butcher",
+ iron:"iron|steel|metal|copper|stone|bundle of iron|steel or metal",
+ wood:"wood|stick|bamboo|tree|leaves|bushes|bush|mahogany|dry wood|long stick|fallen tree|falling tree",
+ green:"green|grass|ganja|flowers|flower|bunch of flowers|green pear",
+ travel:"aeroplane|airplane|flying|foreign|ship|boat|truck|car|bus|bicycle|driver|driving car|road|kite|coming from foreign",
+ wedding:"wedding|bride|married|ring|wedding band|golden ring|married man|married woman",
+ law:"police|lawyer|judge|handcuff|accused|inspector|army|soldier|official|officials|official person|spy|murder|thief",
+ fight:"fight|fighting|riot|violent|enemy|accident|disaster|break|fight in a crowd",
+ white:"white|anything white|ice|white cloth|white hair",
+ black:"black|anything black|black man|black woman",
+ old:"old man|widow|grey hair|beggar man|old lady|old building|old clothes",
+ young:"young|youth|children|boy|girl|teenager|anything young|young girl|big boy",
+ feet:"shoes|foot|left foot|right foot|knee|torn shoes|shoemaker",
+ hair:"hair|beard|comb|barber|bald head|long beard",
+ mouth:"mouth|tongue|teeth|tooth|singing|noise|shouting|language|kiss|kissing|gold teeth|bad tooth",
+ spirit:"devil|obeahman|spirit|duppy|fright|wicked woman",
+ crowd:"party|crowd|big crowd|concert|music|johnkunu|christmas|dancing|meeting people|stadium",
+ hat:"hat|crown|new hat|king|queen|royalty|chief",
+ snake:"snake|big snake|lizard|rope|cord|wire|long",
+ strong:"strong|anything strong|strong man|bone"
+};
+const SOFT = {white:.6, black:.6, old:.7, young:.7, food:.8};
+const CRE = {};
+for (const [c, words] of Object.entries(CONCEPTS)) {
+  CRE[c] = new RegExp("\\b(" + words.split("|").map(w => w.replace(/[-]/g,"\\-")).join("|") + ")(s|es)?\\b", "i");
+}
+const norm = s => s.toLowerCase().replace(/^(to |a |an |the )/,"").replace(/\(.*?\)/g,"").trim();
+
+function hits(num) {
+  const d = NUMS[num], out = {};
+  const add = (m, w) => {
+    for (const c in CRE) if (CRE[c].test(m)) { if (!out[c] || out[c].w < w) out[c] = {m, w}; }
+    const k = "=" + norm(m); if (!out[k] || out[k].w < w) out[k] = {m, w};
+  };
+  add(d.fig, 3); d.major.forEach(m => add(m, 2)); d.minor.forEach(m => add(m, 1));
+  return out;
+}
+const HITS = {}; for (let n = 1; n <= 36; n++) HITS[n] = hits(n);
+
+function storyFor(n, m, a, b) {
+  const A = NUMS[n], B = NUMS[m];
+  if (norm(a) === norm(b)) return `${A.fig} can mean ${a.toLowerCase()}, and ${a.toLowerCase()} is also under ${m} ${B.fig}.`;
+  if (b === B.fig) return `${A.fig} can mean ${a.toLowerCase()}, and that points to ${B.fig}, ${m}.`;
+  if (a === A.fig) return `${A.fig} goes with ${b.toLowerCase()}, and ${b.toLowerCase()} is ${m} ${B.fig}.`;
+  return `${A.fig} can mean ${a.toLowerCase()}, and ${a.toLowerCase()} goes with ${b.toLowerCase()}, which is ${m} ${B.fig}.`;
+}
+
+const LINKS = {};
+for (let n = 1; n <= 36; n++) {
+  const list = [];
+  for (let m = 1; m <= 36; m++) {
+    if (m === n) continue;
+    let score = 0, best = null, bestS = 0;
+    for (const c in HITS[n]) {
+      const y = HITS[m][c]; if (!y) continue;
+      const x = HITS[n][c];
+      const s = x.w * y.w * (c[0] === "=" ? 1.5 : (SOFT[c] || 1));
+      score += s;
+      if (s > bestS) { bestS = s; best = [x.m, y.m]; }
+    }
+    score /= Math.sqrt(Object.keys(HITS[m]).length / 25);
+    const custom = STORIES.find(s => s[0] === n && s[1] === m);
+    let story = best ? storyFor(n, m, best[0], best[1]) : "";
+    if (custom) { score += 30; story = custom[2]; }
+    if (score > 0) list.push({m, score, story});
+  }
+  list.sort((a, b) => b.score - a.score);
+  LINKS[n] = list;
+}
+
+function rank(last, prev) {
+  const sc = {};
+  LINKS[last].forEach(l => sc[l.m] = {m: l.m, score: l.score, story: l.story});
+  if (prev && prev !== last) LINKS[prev].forEach(l => {
+    if (sc[l.m]) { sc[l.m].score += l.score * .5; }
+    else sc[l.m] = {m: l.m, score: l.score * .5, story: l.story.replace(/^/, `Earlier, ${prev} played. `)};
+  });
+  return Object.values(sc).sort((a, b) => b.score - a.score);
+}
+
+/* ---------- Coin icons (original drawings) ---------- */
+const S = 'stroke="#3a2a00" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"';
+const skinL = "#f3c9a0", skinM = "#c98b5a", skinD = "#7a4a2a";
+const ICONS = {
+1:`<path d="M36 72V46a14 14 0 0 1 28 0v26l-4.7-5-4.6 5-4.7-5-4.7 5-4.6-5z" fill="#fff" ${S}/><circle cx="44.5" cy="47" r="2.6" fill="#222"/><circle cx="55.5" cy="47" r="2.6" fill="#222"/><ellipse cx="50" cy="56" rx="3" ry="4" fill="#222"/><path d="M36 54l-6-4M64 54l6-4" ${S} fill="none"/>`,
+2:`<path d="M50 70c-9 0-13-7-10-14 2 4 4 5 5 4-2-7 2-12 7-16-1 6 6 9 6 16 0 6-3 10-8 10z" fill="#f4511e" ${S}/><path d="M50 69c-4 0-6-3-5-7 2 2 3 2 3 1 0-3 2-6 4-7 0 3 3 5 3 8 0 3-2 5-5 5z" fill="#ffd54f"/><path d="M39 74h22M42 77h16" stroke="#6d4c41" stroke-width="3.5" stroke-linecap="round"/>`,
+3:`<path d="M44 26h12l7 13-6 36H43l-6-36z" fill="#795548" ${S}/><path d="M44 26h12l7 13-6 36H43l-6-36z" fill="none" stroke="#a1887f" stroke-width="1" transform="translate(50 50) scale(.86) translate(-50 -50)"/><path d="M50 36v20M43 43h14" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`,
+4:`<path d="M30 64c4 9 36 9 40 0" fill="#8d6e63" ${S}/><path d="M29 63l5 4 4-3 5 4 4-3 5 4 4-3 5 4 4-3 6 2" fill="none" stroke="#5d4037" stroke-width="2"/><ellipse cx="50" cy="48" rx="13" ry="17" fill="#fffaf0" ${S}/><ellipse cx="45" cy="42" rx="3" ry="5" fill="#fff"/>`,
+5:`<path d="M38 74l4-22h10l3 22" fill="#6a1b9a" ${S}/><circle cx="47" cy="40" r="8" fill="${skinM}" ${S}/><path d="M39 38h16v4H39z" fill="#222"/><circle cx="44" cy="40" r="1.2" fill="#fff"/><circle cx="50" cy="40" r="1.2" fill="#fff"/><path d="M39 35q8-8 16 0" fill="#4a148c" ${S}/><path d="M52 50l8 2" ${S}/><circle cx="62" cy="58" r="10" fill="#5c6bc0" ${S}/><path d="M59 48l3 3 3-3" fill="none" ${S}/>`,
+6:`<path d="M24 34h52" stroke="#555" stroke-width="3.5" stroke-linecap="round"/><rect x="22" y="27" width="6" height="14" rx="2" fill="#90a4ae" ${S}/><rect x="72" y="27" width="6" height="14" rx="2" fill="#90a4ae" ${S}/><path d="M37 34l6 10M63 34l-6 10" stroke="${skinM}" stroke-width="5" stroke-linecap="round"/><circle cx="50" cy="44" r="7" fill="${skinM}" ${S}/><path d="M41 52h18l-3 14h-12z" fill="${skinM}" ${S}/><path d="M44 66h12v5H44z" fill="#222"/><path d="M46 71v5M54 71v5" stroke="${skinM}" stroke-width="4" stroke-linecap="round"/>`,
+7:`<path d="M50 42L36 74h28z" fill="#fff" ${S}/><circle cx="50" cy="36" r="7" fill="${skinM}" ${S}/><path d="M42 34q8-12 16 0l4 20-4-2-8-14-8 14-4 2z" fill="#eceff1" opacity=".9" ${S}/><circle cx="50" cy="58" r="4" fill="#f48fb1" ${S}/><circle cx="46" cy="58" r="2.5" fill="#fff59d"/><circle cx="54" cy="58" r="2.5" fill="#fff59d"/>`,
+8:`<circle cx="50" cy="30" r="7" fill="${skinM}" ${S}/><circle cx="50" cy="52" r="15" fill="#a1683a" ${S}/><circle cx="52" cy="54" r="1.5" fill="#3a2a00"/><path d="M45 66v10M55 66v10" stroke="#1565c0" stroke-width="5" stroke-linecap="round"/><path d="M38 44l-5 8M62 44l4 8" stroke="${skinM}" stroke-width="4" stroke-linecap="round"/>`,
+9:`<path d="M37 37q-6-6-4-12M63 37q6-6 4-12" fill="none" stroke="#bdbdbd" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="33" cy="44" rx="6" ry="3.5" fill="#fff" ${S}/><ellipse cx="67" cy="44" rx="6" ry="3.5" fill="#fff" ${S}/><path d="M38 38h24l-2 22H40z" fill="#fff" ${S}/><path d="M41 40q5 4 9 0" fill="#795548"/><ellipse cx="50" cy="62" rx="11" ry="8" fill="#f8bbd0" ${S}/><circle cx="46" cy="62" r="1.6" fill="#3a2a00"/><circle cx="54" cy="62" r="1.6" fill="#3a2a00"/><circle cx="44" cy="48" r="2" fill="#222"/><circle cx="56" cy="48" r="2" fill="#222"/>`,
+10:`<path d="M34 48l16-14 16 14" fill="#e53935" ${S}/><rect x="38" y="48" width="24" height="24" fill="#90caf9" ${S}/><rect x="46" y="58" width="8" height="14" fill="#6d4c41" ${S}/><rect x="40" y="51" width="5" height="5" fill="#fff" ${S}/><path d="M32 74h36" stroke="#43a047" stroke-width="3" stroke-linecap="round"/>`,
+11:`<path d="M37 40q-7 4-5 18l6-4z" fill="#5d4037" ${S}/><path d="M63 40q7 4 5 18l-6-4z" fill="#5d4037" ${S}/><circle cx="50" cy="49" r="14" fill="#a1887f" ${S}/><ellipse cx="50" cy="57" rx="8" ry="6" fill="#d7ccc8" ${S}/><ellipse cx="50" cy="54" rx="3.5" ry="2.5" fill="#222"/><circle cx="44" cy="45" r="2" fill="#222"/><circle cx="56" cy="45" r="2" fill="#222"/><path d="M50 57v3" ${S}/>`,
+12:`<path d="M38 58q-4-26 14-28 14 0 14 16 0 6-3 8l1 6-4 1-1 7h-8l-1 6H42z" fill="${skinM}" ${S}/><path d="M38 52q-3-24 16-24 12 2 12 14l-5-3q-6 2-14-1-3 6-6 14z" fill="#2b1d10" ${S}/><circle cx="58" cy="47" r="1.6" fill="#222"/>`,
+13:`<circle cx="50" cy="55" r="12" fill="${skinD}" ${S}/><path d="M35 44q15-10 30 0z" fill="#fff" ${S}/><rect x="37" y="43" width="26" height="5" fill="#222"/><path d="M38 48q12 6 24 0" fill="#111" ${S}/><circle cx="50" cy="45.5" r="2" fill="#f5c518"/><circle cx="45.5" cy="54" r="1.6" fill="#fff"/><circle cx="54.5" cy="54" r="1.6" fill="#fff"/><path d="M45 61q5 3 10 0" fill="none" stroke="#fff" stroke-width="1.5"/>`,
+14:`<path d="M30 50q20-18 40 0-20 22-40 0z" fill="#d32f2f" ${S}/><path d="M34 50q16-8 32 0-16 13-32 0z" fill="#3e0d0d"/><path d="M36 49h28v3H36z" fill="#fff"/><ellipse cx="50" cy="56" rx="7" ry="3" fill="#e57373"/>`,
+15:`<path d="M66 60q14 2 8 14" fill="none" stroke="#f48fb1" stroke-width="2" stroke-linecap="round"/><ellipse cx="50" cy="58" rx="17" ry="10" fill="#9e9e9e" ${S}/><path d="M34 54l-8 4 8 5z" fill="#9e9e9e" ${S}/><circle cx="38" cy="49" r="5" fill="#f8bbd0" ${S}/><circle cx="32" cy="56" r="1.4" fill="#222"/><circle cx="26" cy="58" r="1.4" fill="#f06292"/><path d="M44 68v4M56 68v4" ${S}/>`,
+16:`<circle cx="50" cy="38" r="8" fill="${skinD}" ${S}/><circle cx="40" cy="34" r="4" fill="#222"/><circle cx="60" cy="34" r="4" fill="#222"/><path d="M42 33q8-9 16 0" fill="#222"/><path d="M50 46L38 66h24z" fill="#1e88e5" ${S}/><path d="M45 66v8M55 66v8" stroke="${skinD}" stroke-width="3.5" stroke-linecap="round"/><path d="M42 52l-6 6M58 52l6 6" stroke="${skinD}" stroke-width="3" stroke-linecap="round"/><circle cx="47" cy="38" r="1.2" fill="#fff"/><circle cx="53" cy="38" r="1.2" fill="#fff"/>`,
+17:`<circle cx="50" cy="52" r="13" fill="${skinL}" ${S}/><path d="M36 46q14-16 28 0z" fill="#222" ${S}/><circle cx="50" cy="35" r="2.5" fill="#c62828"/><path d="M45 52h3M52 52h3" ${S}/><path d="M44 58q-3 4-4 8M56 58q3 4 4 8" fill="none" stroke="#222" stroke-width="1.6"/><path d="M45 58q5 3 10 0" fill="none" ${S}/>`,
+18:`<path d="M38 74l2-14q-8-6-6-16l10-14 8 1 10 12q2 6-4 8l-6-3-4 6 2 20z" fill="#8d5a2b" ${S}/><path d="M44 30l2-6 4 7M46 32q-6 8-8 24" fill="#3e2723" ${S}/><circle cx="52" cy="40" r="1.8" fill="#222"/><circle cx="62" cy="50" r="1.2" fill="#222"/><path d="M42 36l10 2" stroke="#f5c518" stroke-width="2"/>`,
+19:`<g fill="#cfd8dc" ${S}><ellipse cx="38" cy="66" rx="9" ry="3.5"/><ellipse cx="38" cy="61" rx="9" ry="3.5"/><ellipse cx="38" cy="56" rx="9" ry="3.5"/><ellipse cx="38" cy="51" rx="9" ry="3.5"/><ellipse cx="60" cy="66" rx="9" ry="3.5"/><ellipse cx="60" cy="61" rx="9" ry="3.5"/><ellipse cx="60" cy="56" rx="9" ry="3.5"/><ellipse cx="60" cy="51" rx="9" ry="3.5"/><ellipse cx="60" cy="46" rx="9" ry="3.5"/><ellipse cx="49" cy="40" rx="9" ry="3.5"/><ellipse cx="49" cy="35" rx="9" ry="3.5"/></g>`,
+20:`<circle cx="50" cy="50" r="14" fill="#c5e1a5" ${S}/><path d="M43 47q2 2 4 0M53 47q2 2 4 0" fill="none" ${S}/><path d="M46 57q4-2 8 0" fill="none" ${S}/><path d="M54 56l14 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="68" cy="64" r="2.5" fill="#e53935"/><path d="M38 40q12-8 24 0" fill="none" stroke="#2196f3" stroke-width="4" stroke-linecap="round"/>`,
+21:`<circle cx="50" cy="32" r="7" fill="${skinL}" ${S}/><circle cx="54" cy="25" r="4" fill="#ffca28" ${S}/><path d="M43 30q7-8 14 0" fill="#ffca28"/><path d="M50 40l-10 30h20z" fill="#e53935" ${S}/><path d="M45 46l-6 6 5 4M55 46l8-2" fill="none" stroke="${skinL}" stroke-width="3" stroke-linecap="round"/><path d="M45 70l-3 6M55 70l3 6" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>`,
+22:`<path d="M30 42q20-12 40 0-20 5-40 0z" fill="#f48fb1" ${S}/><path d="M40 40q10-14 20 0" fill="#f48fb1" ${S}/><circle cx="50" cy="53" r="11" fill="#ffe0bd" ${S}/><path d="M39 50q-2 10 3 14M61 50q2 10-3 14" fill="none" stroke="#c8a165" stroke-width="3"/><circle cx="46" cy="52" r="1.4" fill="#222"/><circle cx="54" cy="52" r="1.4" fill="#222"/><path d="M46 58q4 3 8 0" fill="none" stroke="#c2185b" stroke-width="1.6"/>`,
+23:`<circle cx="50" cy="50" r="14" fill="${skinD}" ${S}/><path d="M36 46q2-14 14-14 12 0 14 14-6-6-14-6-8 0-14 6z" fill="#1b1b1b"/><circle cx="45" cy="49" r="1.8" fill="#fff"/><circle cx="55" cy="49" r="1.8" fill="#fff"/><path d="M44 56q6-3 12 0" fill="#1b1b1b"/><path d="M45 59q5 3 10 0" fill="none" stroke="#fff" stroke-width="1.5"/>`,
+24:`<path d="M50 28q12 16 12 26a12 12 0 0 1-24 0q0-10 12-26z" fill="#4fc3f7" ${S}/><path d="M45 56a6 6 0 0 0 6 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><path d="M30 72q5-4 10 0t10 0 10 0 10 0" fill="none" stroke="#0288d1" stroke-width="2.5" stroke-linecap="round"/>`,
+25:`<path d="M34 72q-4-22 14-30l10 2q12 10 6 28z" fill="#212121" ${S}/><path d="M40 52q-10 4-12 16l10-4zM60 52q10 4 12 16l-10-4z" fill="#424242" ${S}/><circle cx="54" cy="34" r="7" fill="#d84315" ${S}/><path d="M60 34q6 1 5 7l-4-3z" fill="#fff" ${S}/><circle cx="55" cy="32" r="1.4" fill="#222"/><path d="M42 72l-2 5M56 72l2 5" stroke="#9e9e9e" stroke-width="2.5" stroke-linecap="round"/>`,
+26:`<circle cx="50" cy="48" r="13" fill="#ffe0bd" ${S}/><path d="M37 46q0-14 14-14 12 0 12 12-8-6-26 2z" fill="#9e9e9e"/><circle cx="45" cy="48" r="1.6" fill="#1565c0"/><circle cx="55" cy="48" r="1.6" fill="#1565c0"/><path d="M46 55q4 2 8 0" fill="none" stroke="#a1887f" stroke-width="1.6"/><path d="M40 62h20l-4 12H44z" fill="#263238" ${S}/><path d="M50 62l-2 5 2 6 2-6z" fill="#c62828"/>`,
+27:`<path d="M50 76c-15 0-22-12-17-24 3 6 6 7 8 6-3-12 4-22 12-28-1 10 8 13 10 20 2-3 2-6 1-9 6 6 8 14 7 20 0 9-8 15-21 15z" fill="#e53935" ${S}/><path d="M50 74c-9 0-13-7-10-14 2 4 4 4 5 3-1-7 3-12 7-15 0 6 5 9 6 13 4 5 3 13-8 13z" fill="#ff9800"/><path d="M50 72c-4 0-6-3-5-7 2 2 3 2 3 1 0-3 2-6 4-6 0 3 3 5 3 8 0 2-2 4-5 4z" fill="#ffeb3b"/>`,
+28:`<path d="M36 50q-2 16 14 18 16 0 18-16l-8-6q-4 6-12 2z" fill="#fff" ${S}/><path d="M30 40q-4 8 6 10" fill="#fff" ${S}/><circle cx="54" cy="38" r="8" fill="#fff" ${S}/><path d="M50 30q2-6 5-2 2-5 5 0 3-2 3 3z" fill="#e53935" ${S}/><path d="M62 38l6 2-6 2z" fill="#ffb300" ${S}/><path d="M58 44q2 5-1 6" fill="#e53935"/><circle cx="56" cy="37" r="1.4" fill="#222"/><path d="M46 68v8M54 68v8" stroke="#ffb300" stroke-width="2.5" stroke-linecap="round"/>`,
+29:`<path d="M36 74l4-28h20l4 28z" fill="#212121" ${S}/><circle cx="50" cy="36" r="8" fill="${skinL}" ${S}/><path d="M43 33q7-8 14 0" fill="#e0e0e0"/><rect x="46" y="45" width="8" height="4" fill="#fff" ${S}/><rect x="40" y="56" width="16" height="11" rx="1" fill="#6d4c41" ${S}/><path d="M48 58v7M45 61h6" stroke="#f5c518" stroke-width="1.5"/>`,
+30:`<path d="M28 50q14-16 34-4l10-8v24l-10-8q-20 12-34-4z" fill="#ffab91" ${S}/><circle cx="36" cy="48" r="2" fill="#222"/><path d="M44 44q3 6 0 12M51 44q3 6 0 12" fill="none" stroke="#e64a19" stroke-width="1.3"/><path d="M30 52q4 2 8 0" fill="none" ${S}/>`,
+31:`<path d="M28 56q8-8 16-4 8 4 16 0 8-4 10 4 2 10-8 10-6 0-4-6" fill="none" stroke="#43a047" stroke-width="7" stroke-linecap="round"/><ellipse cx="26" cy="55" rx="7" ry="5" fill="#43a047" ${S}/><circle cx="24" cy="53" r="1.4" fill="#222"/><path d="M38 52l-4-8M38 56l-4 8M54 52l2-8M54 56l2 8" stroke="#2e7d32" stroke-width="3" stroke-linecap="round"/>`,
+32:`<g ${S}><path d="M28 70l4-10h16l4 10z" fill="#ffc107"/><path d="M48 70l4-10h16l4 10z" fill="#ffc107"/><path d="M38 60l4-10h16l4 10z" fill="#ffd54f"/></g><path d="M44 52h6M34 62h6M54 62h6" stroke="#fff8e1" stroke-width="2" stroke-linecap="round"/><path d="M66 36l2 4 4 1-4 2-1 4-2-4-4-1 4-2z" fill="#fff"/>`,
+33:`<path d="M28 46l22-18 22 18z" fill="#d32f2f" ${S}/><rect x="31" y="46" width="38" height="26" fill="#fff8e1" ${S}/><path d="M37 50v18M44 50v18M56 50v18M63 50v18" stroke="#bdbdbd" stroke-width="3"/><rect x="47" y="58" width="6" height="14" fill="#6d4c41" ${S}/><circle cx="50" cy="39" r="3" fill="#fff" ${S}/><path d="M26 74h48" stroke="#43a047" stroke-width="3" stroke-linecap="round"/>`,
+34:`<circle cx="50" cy="46" r="14" fill="${skinM}" ${S}/><path d="M48 32q3-5 6-1" fill="none" stroke="#3e2723" stroke-width="2"/><circle cx="45" cy="45" r="1.8" fill="#222"/><circle cx="55" cy="45" r="1.8" fill="#222"/><circle cx="41" cy="50" r="2.5" fill="#f48fb1" opacity=".7"/><circle cx="59" cy="50" r="2.5" fill="#f48fb1" opacity=".7"/><circle cx="50" cy="53" r="3.5" fill="#e53935" ${S}/><path d="M38 60q12 14 24 0z" fill="#81d4fa" ${S}/>`,
+35:`<path d="M42 32q-8-8-12 2M58 32q8-8 12 2" fill="none" stroke="#795548" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="34" cy="44" rx="7" ry="3" fill="#eee" ${S} transform="rotate(20 34 44)"/><ellipse cx="66" cy="44" rx="7" ry="3" fill="#eee" ${S} transform="rotate(-20 66 44)"/><path d="M40 38h20l-3 24h-14z" fill="#f5f5f5" ${S}/><path d="M46 62l4 12 4-12" fill="#e0e0e0" ${S}/><circle cx="45" cy="46" r="2" fill="#222"/><circle cx="55" cy="46" r="2" fill="#222"/><ellipse cx="50" cy="58" rx="5" ry="3" fill="#f8bbd0"/>`,
+36:`<path d="M44 74l4-24q-6-2-6-10" fill="none" stroke="${skinD}" stroke-width="0"/><path d="M42 74l2-20q8-10 16-4l2 24z" fill="#ffee58" ${S}/><circle cx="46" cy="38" r="8" fill="${skinD}" ${S}/><circle cx="42" cy="31" r="4.5" fill="#e0e0e0" ${S}/><path d="M40 33q6-6 12 0" fill="#e0e0e0"/><path d="M62 52l6 24" stroke="#6d4c41" stroke-width="3" stroke-linecap="round"/><path d="M58 54l4-2" stroke="${skinD}" stroke-width="3" stroke-linecap="round"/><circle cx="49" cy="38" r="1.3" fill="#fff"/>`
+};
+function coin(n, extra = "") {
+  return `<span class="coin" ${extra}><svg viewBox="0 0 100 100" role="img" aria-label="${n} ${NUMS[n].fig}"><circle cx="50" cy="50" r="48" fill="url(#cg)" stroke="#b07a00" stroke-width="2"/><circle cx="50" cy="50" r="39" fill="url(#cg2)" stroke="#e0a800" stroke-width="2"/>${ICONS[n]}<circle cx="20" cy="20" r="14" fill="#fff" stroke="#b07a00" stroke-width="2"/><text x="20" y="25.5" text-anchor="middle" font-family="Baloo 2,Arial" font-weight="800" font-size="${n > 9 ? 14 : 16}" fill="#1d2a1f">${n}</text></svg></span>`;
+}
+document.getElementById("logo").outerHTML = `<span class="coin"><svg viewBox="0 0 100 100" width="38" height="38"><circle cx="50" cy="50" r="48" fill="url(#cg)" stroke="#b07a00" stroke-width="3"/><circle cx="50" cy="50" r="36" fill="url(#cg2)"/><text x="50" y="64" text-anchor="middle" font-family="Baloo 2,Arial" font-weight="800" font-size="40" fill="#0b6b3a">36</text></svg></span>`;
+
+/* ---------- Tabs ---------- */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function show(tab) {
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+  ["results","stories","chart"].forEach(t => $(t).classList.toggle("hide", t !== tab));
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => show(b.dataset.tab));
+
+/* ---------- Story picks tab ---------- */
+let selected = 8;
+function renderGrid() {
+  $("grid").innerHTML = Object.keys(NUMS).map(n => `<button data-n="${n}" class="${+n === selected ? "on" : ""}" aria-label="${n} ${NUMS[n].fig}">${coin(n)}</button>`).join("");
+  $("grid").querySelectorAll("button").forEach(b => b.onclick = () => { selected = +b.dataset.n; renderGrid(); renderStory(); $("storyOut").scrollIntoView({behavior:"smooth"}); });
+}
+function renderStory() {
+  const d = NUMS[selected], top = LINKS[selected].slice(0, 4);
+  $("storyOut").innerHTML = `
+    <div class="pick">${coin(selected)}<div><div class="num">${selected}</div><div class="fig">${d.fig}</div></div></div>
+    <h3>If ${selected} plays, the story leads to</h3>
+    <ul class="links">${top.map((l, i) => `<li><button class="alt" data-n="${l.m}">${coin(l.m)}${l.m} ${NUMS[l.m].fig}${i === 0 ? '<span class="tag">TOP</span>' : ""}</button><div class="story" style="margin-top:6px">${esc(l.story)}</div></li>`).join("")}</ul>
+    <h3>Major meaning</h3><p>${d.major.map(esc).join(", ")}</p>
+    <h3>Minor meaning</h3><p>${d.minor.map(esc).join(", ")}</p>`;
+  $("storyOut").querySelectorAll(".alt").forEach(b => b.onclick = () => { selected = +b.dataset.n; renderGrid(); renderStory(); });
+}
+function openStory(n) { selected = n; renderGrid(); renderStory(); show("stories"); }
+
+/* ---------- Chart tab ---------- */
+function renderChart() {
+  const q = $("q").value.trim().toLowerCase();
+  const mark = s => { const t = esc(s); if (!q) return t; const i = t.toLowerCase().indexOf(q); return i < 0 ? t : t.slice(0, i) + "<mark>" + t.slice(i, i + q.length) + "</mark>" + t.slice(i + q.length); };
+  const list = Object.values(NUMS).filter(d => !q || d.fig.toLowerCase().includes(q) || String(d.n) === q || d.major.concat(d.minor).some(m => m.toLowerCase().includes(q)));
+  $("qCount").textContent = q ? (list.length ? `${list.length} number${list.length > 1 ? "s" : ""} match "${$("q").value.trim()}"` : "No match. Try another word.") : "All 36 numbers. Tap a coin to see its story picks.";
+  $("chartList").innerHTML = list.map(d => `<div class="chart-item"><div><button class="alt" style="background:none;padding:0;display:block" data-n="${d.n}">${coin(d.n)}</button><div class="lbl">${esc(d.fig.toUpperCase())}</div></div><div><div class="k">MAJOR</div><p>${d.major.map(mark).join(", ")}</p><div class="k">MINOR</div><p>${d.minor.map(mark).join(", ")}</p></div></div>`).join("") || "";
+  $("chartList").classList.toggle("hide", !list.length);
+  $("chartList").querySelectorAll("button").forEach(b => b.onclick = () => openStory(+b.dataset.n));
+}
+$("q").oninput = renderChart;
+
+/* ---------- Results ---------- */
+const DRAWS = [["Earlybird","8:30 AM"],["Morning","10:30 AM"],["Midday","1:00 PM"],["Midafternoon","3:00 PM"],["Drivetime","5:00 PM"],["Evening","8:25 PM"]];
+const dIdx = name => DRAWS.findIndex(d => d[0].toLowerCase() === String(name).toLowerCase().replace(/\s/g, ""));
+const todayJM = () => new Date().toLocaleDateString("en-CA", {timeZone: "America/Jamaica"});
+let feed = {updated: null, draws: []};
+function manual() { try { return JSON.parse(localStorage.getItem("cp_manual") || "[]"); } catch (e) { return []; } }
+function saveManual(a) { try { localStorage.setItem("cp_manual", JSON.stringify(a)); } catch (e) {} }
+function allDraws() {
+  const map = {};
+  manual().forEach(d => map[d.date + "|" + dIdx(d.draw)] = {...d, manual: true});
+  (feed.draws || []).forEach(d => { if (dIdx(d.draw) >= 0 && d.number >= 1 && d.number <= 36) map[d.date + "|" + dIdx(d.draw)] = d; });
+  return Object.values(map).sort((a, b) => a.date === b.date ? dIdx(a.draw) - dIdx(b.draw) : a.date < b.date ? -1 : 1);
+}
+const niceDate = s => new Date(s + "T12:00:00").toLocaleDateString("en-JM", {weekday: "long", day: "numeric", month: "short"});
+
+function renderResults() {
+  const all = allDraws(), today = todayJM();
+  const last = all[all.length - 1], prev = all[all.length - 2];
+  if (last) {
+    const r = rank(last.number, prev && prev.number).slice(0, 4), top = r[0];
+    const nextIdx = last.date === today ? dIdx(last.draw) + 1 : 0;
+    const nextName = nextIdx < 6 ? `${DRAWS[nextIdx][0]} (${DRAWS[nextIdx][1]})` : "tomorrow's Earlybird";
+    $("nextCard").innerHTML = `
+      <h2>Next play pick <span class="tag">STORY PICK</span></h2>
+      <div class="muted">${last.number} ${NUMS[last.number].fig} played in the ${last.draw}${last.date === today ? "" : " on " + niceDate(last.date)}. For the ${nextName}, the story says:</div>
+      <div class="pick" style="margin-top:12px">${coin(top.m)}<div><div class="num">${top.m}</div><div class="fig">${NUMS[top.m].fig}</div></div></div>
+      <div class="story">${esc(top.story)}</div>
+      <h3>Also in the story</h3>
+      <div class="alts">${r.slice(1).map(x => `<button class="alt" data-n="${x.m}">${coin(x.m)}${x.m} ${NUMS[x.m].fig}</button>`).join("")}</div>`;
+    $("nextCard").querySelectorAll(".alt").forEach(b => b.onclick = () => openStory(+b.dataset.n));
+  } else {
+    $("nextCard").innerHTML = `<h2>Next play pick</h2><div class="muted">No results yet. Add the last number that played below, or open Story picks and tap it.</div>`;
+  }
+  const t = all.filter(d => d.date === today);
+  $("today").innerHTML = DRAWS.map(([name, time], i) => {
+    const d = t.find(x => dIdx(x.draw) === i);
+    return d ? `<button class="draw" data-n="${d.number}"><div class="t">${name} · ${time}</div>${coin(d.number)}<div class="n">${d.number} ${NUMS[d.number].fig}</div></button>`
+             : `<div class="draw empty"><div class="t">${name} · ${time}</div><div class="blank">?</div><div class="n">&nbsp;</div></div>`;
+  }).join("");
+  $("today").querySelectorAll("button").forEach(b => b.onclick = () => openStory(+b.dataset.n));
+  $("updated").textContent = feed.updated ? "Last checked " + new Date(feed.updated).toLocaleString("en-JM", {timeZone: "America/Jamaica", hour: "numeric", minute: "2-digit", day: "numeric", month: "short"}) : "Waiting for the first results update.";
+  const days = [...new Set(all.map(d => d.date))].filter(d => d !== today).sort().reverse().slice(0, 7);
+  $("earlier").innerHTML = days.length ? days.map(day => `<div class="day"><b>${niceDate(day)}</b><div class="row">${all.filter(d => d.date === day).map(d => `<button class="mini" data-n="${d.number}">${coin(d.number)}${d.draw}: ${d.number}</button>`).join("")}</div></div>`).join("") : `<div class="muted">Nothing yet.</div>`;
+  $("earlier").querySelectorAll("button").forEach(b => b.onclick = () => openStory(+b.dataset.n));
+}
+
+$("fDraw").innerHTML = DRAWS.map(d => `<option>${d[0]}</option>`).join("");
+$("fDate").value = todayJM();
+$("fAdd").onclick = () => {
+  const n = +$("fNum").value, date = $("fDate").value, draw = $("fDraw").value;
+  if (!date || !(n >= 1 && n <= 36)) { $("fMsg").textContent = " Pick a date and a number from 1 to 36."; return; }
+  const a = manual().filter(d => !(d.date === date && d.draw === draw)); a.push({date, draw, number: n}); saveManual(a);
+  $("fNum").value = ""; $("fMsg").textContent = ` Saved ${draw}: ${n}.`; renderResults();
+};
+
+fetch("results.json?v=" + Date.now()).then(r => r.ok ? r.json() : null).then(j => { if (j) feed = j; }).catch(() => {}).finally(renderResults);
+renderGrid(); renderStory(); renderChart(); renderResults();
+setInterval(() => fetch("results.json?v=" + Date.now()).then(r => r.ok ? r.json() : null).then(j => { if (j) { feed = j; renderResults(); } }).catch(() => {}), 5 * 60 * 1000);
+</script>
+</body>
+</html>
