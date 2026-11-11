@@ -1,1 +1,291 @@
-{"updated": null, "source": "lotteryguru.com", "draws": []}
+{
+ "updated": "2026-11-11T00:42:04+00:00",
+ "source": "lotteryguru.com",
+ "draws": [
+  {
+   "date": "2026-11-01",
+   "draw": "Earlybird",
+   "number": 26
+  },
+  {
+   "date": "2026-11-01",
+   "draw": "Morning",
+   "number": 17
+  },
+  {
+   "date": "2026-11-01",
+   "draw": "Midday",
+   "number": 12
+  },
+  {
+   "date": "2026-11-01",
+   "draw": "Midafternoon",
+   "number": 36
+  },
+  {
+   "date": "2026-11-01",
+   "draw": "Drivetime",
+   "number": 20
+  },
+  {
+   "date": "2026-11-01",
+   "draw": "Evening",
+   "number": 19
+  },
+  {
+   "date": "2026-11-02",
+   "draw": "Earlybird",
+   "number": 26
+  },
+  {
+   "date": "2026-11-02",
+   "draw": "Morning",
+   "number": 18
+  },
+  {
+   "date": "2026-11-02",
+   "draw": "Midday",
+   "number": 12
+  },
+  {
+   "date": "2026-11-02",
+   "draw": "Midafternoon",
+   "number": 10
+  },
+  {
+   "date": "2026-11-02",
+   "draw": "Drivetime",
+   "number": 24
+  },
+  {
+   "date": "2026-11-02",
+   "draw": "Evening",
+   "number": 25
+  },
+  {
+   "date": "2026-11-03",
+   "draw": "Earlybird",
+   "number": 27
+  },
+  {
+   "date": "2026-11-03",
+   "draw": "Morning",
+   "number": 17
+  },
+  {
+   "date": "2026-11-03",
+   "draw": "Midday",
+   "number": 21
+  },
+  {
+   "date": "2026-11-03",
+   "draw": "Midafternoon",
+   "number": 12
+  },
+  {
+   "date": "2026-11-03",
+   "draw": "Drivetime",
+   "number": 26
+  },
+  {
+   "date": "2026-11-03",
+   "draw": "Evening",
+   "number": 27
+  },
+  {
+   "date": "2026-11-04",
+   "draw": "Earlybird",
+   "number": 32
+  },
+  {
+   "date": "2026-11-04",
+   "draw": "Morning",
+   "number": 33
+  },
+  {
+   "date": "2026-11-04",
+   "draw": "Midday",
+   "number": 3
+  },
+  {
+   "date": "2026-11-04",
+   "draw": "Midafternoon",
+   "number": 22
+  },
+  {
+   "date": "2026-11-04",
+   "draw": "Drivetime",
+   "number": 17
+  },
+  {
+   "date": "2026-11-04",
+   "draw": "Evening",
+   "number": 36
+  },
+  {
+   "date": "2026-11-05",
+   "draw": "Earlybird",
+   "number": 13
+  },
+  {
+   "date": "2026-11-05",
+   "draw": "Morning",
+   "number": 19
+  },
+  {
+   "date": "2026-11-05",
+   "draw": "Midday",
+   "number": 3
+  },
+  {
+   "date": "2026-11-05",
+   "draw": "Midafternoon",
+   "number": 13
+  },
+  {
+   "date": "2026-11-05",
+   "draw": "Drivetime",
+   "number": 4
+  },
+  {
+   "date": "2026-11-05",
+   "draw": "Evening",
+   "number": 6
+  },
+  {
+   "date": "2026-11-06",
+   "draw": "Earlybird",
+   "number": 24
+  },
+  {
+   "date": "2026-11-06",
+   "draw": "Morning",
+   "number": 34
+  },
+  {
+   "date": "2026-11-06",
+   "draw": "Midday",
+   "number": 17
+  },
+  {
+   "date": "2026-11-06",
+   "draw": "Midafternoon",
+   "number": 25
+  },
+  {
+   "date": "2026-11-06",
+   "draw": "Drivetime",
+   "number": 20
+  },
+  {
+   "date": "2026-11-06",
+   "draw": "Evening",
+   "number": 23
+  },
+  {
+   "date": "2026-11-07",
+   "draw": "Earlybird",
+   "number": 1
+  },
+  {
+   "date": "2026-11-07",
+   "draw": "Morning",
+   "number": 36
+  },
+  {
+   "date": "2026-11-07",
+   "draw": "Midday",
+   "number": 5
+  },
+  {
+   "date": "2026-11-07",
+   "draw": "Midafternoon",
+   "number": 13
+  },
+  {
+   "date": "2026-11-07",
+   "draw": "Drivetime",
+   "number": 18
+  },
+  {
+   "date": "2026-11-07",
+   "draw": "Evening",
+   "number": 35
+  },
+  {
+   "date": "2026-11-08",
+   "draw": "Earlybird",
+   "number": 6
+  },
+  {
+   "date": "2026-11-08",
+   "draw": "Morning",
+   "number": 12
+  },
+  {
+   "date": "2026-11-08",
+   "draw": "Midday",
+   "number": 30
+  },
+  {
+   "date": "2026-11-08",
+   "draw": "Midafternoon",
+   "number": 11
+  },
+  {
+   "date": "2026-11-08",
+   "draw": "Drivetime",
+   "number": 2
+  },
+  {
+   "date": "2026-11-08",
+   "draw": "Evening",
+   "number": 28
+  },
+  {
+   "date": "2026-11-09",
+   "draw": "Earlybird",
+   "number": 7
+  },
+  {
+   "date": "2026-11-09",
+   "draw": "Morning",
+   "number": 35
+  },
+  {
+   "date": "2026-11-09",
+   "draw": "Midday",
+   "number": 35
+  },
+  {
+   "date": "2026-11-09",
+   "draw": "Midafternoon",
+   "number": 23
+  },
+  {
+   "date": "2026-11-09",
+   "draw": "Drivetime",
+   "number": 15
+  },
+  {
+   "date": "2026-11-09",
+   "draw": "Evening",
+   "number": 16
+  },
+  {
+   "date": "2026-11-10",
+   "draw": "Earlybird",
+   "number": 21
+  },
+  {
+   "date": "2026-11-10",
+   "draw": "Morning",
+   "number": 25
+  },
+  {
+   "date": "2026-11-10",
+   "draw": "Midday",
+   "number": 29
+  }
+ ]
+}
