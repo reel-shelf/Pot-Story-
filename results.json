@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T21:59:30+00:00",
+ "updated": "2026-11-27T23:00:03+00:00",
  "source": "lotteryguru.com",
  "draws": [
   {
@@ -775,7 +775,7 @@
   {
    "date": "2026-11-26",
    "draw": "Drivetime",
-   "number": 1
+   "number": 25
   },
   {
    "date": "2026-11-26",
@@ -805,6 +805,11 @@
   {
    "date": "2026-11-27",
    "draw": "Drivetime",
+   "number": 1
+  },
+  {
+   "date": "2026-11-27",
+   "draw": "Evening",
    "number": 1
   }
  ]
