@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T14:08:24+00:00",
+ "updated": "2026-11-28T14:57:03+00:00",
  "source": "lotteryguru.com",
  "draws": [
   {
@@ -811,6 +811,11 @@
    "date": "2026-11-27",
    "draw": "Evening",
    "number": 5
+  },
+  {
+   "date": "2026-11-28",
+   "draw": "Earlybird",
+   "number": 2
   }
  ]
 }
